@@ -1,0 +1,30 @@
+{
+  "name": "rescript-ajax",
+  "version": "0.0.1",
+  "description": "rescript module for sendig ajax via axious",
+  "main": "index.js",
+  "scripts": {
+    "res:build": "rescript",
+    "res:dev": "rescript build -w",
+    "test:server": "node ./lib/js/rescript/test-app/ExpressServerTest.bs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mnemesong/rescript-ajax.git"
+  },
+  "keywords": [],
+  "author": "Anatoly Starodubtsev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mnemesong/rescript-ajax/issues"
+  },
+  "homepage": "https://github.com/mnemesong/rescript-ajax#readme",
+  "dependencies": {
+    "rescript-web-types": "^2.*"
+  },
+  "devDependencies": {
+    "rescript": "^10.1.4",
+    "express": "^4.18.2",
+    "multer": "*"
+  }
+}

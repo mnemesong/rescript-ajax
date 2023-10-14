@@ -1,0 +1,20 @@
+rescript = 1
+g_finger := D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml\install.stamp
+rule astj
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
+o rescript\AjaxData.ast : astj ..\..\rescript\AjaxData.res
+rule deps
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -hash bebdc192adae2e50a5d85fa4f8be78bf $in
+  restat = 1
+o rescript\AjaxData.d : deps rescript\AjaxData.ast
+rule mij
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I rescript -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  dyndep = 1
+  restat = 1
+o rescript\AjaxData.cmj rescript\AjaxData.cmi ..\js\rescript\AjaxData.bs.js : mij rescript\AjaxData.ast
+o rescript\AxiosAjax.ast : astj ..\..\rescript\AxiosAjax.res
+o rescript\AxiosAjax.d : deps rescript\AxiosAjax.ast
+o rescript\AxiosAjax.cmj rescript\AxiosAjax.cmi ..\js\rescript\AxiosAjax.bs.js : mij rescript\AxiosAjax.ast
+o rescript\AxiosAjaxParams.ast : astj ..\..\rescript\AxiosAjaxParams.res
+o rescript\AxiosAjaxParams.d : deps rescript\AxiosAjaxParams.ast
+o rescript\AxiosAjaxParams.cmj rescript\AxiosAjaxParams.cmi ..\js\rescript\AxiosAjaxParams.bs.js : mij rescript\AxiosAjaxParams.ast

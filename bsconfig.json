@@ -1,0 +1,18 @@
+{
+    "name": "rescript-ajax",
+    "sources": [
+      {
+        "dir": "rescript",
+        "subdirs": true
+      }
+    ],
+    "package-specs": [
+      {
+        "module": "commonjs"
+      }
+    ],
+    "suffix": ".bs.js",
+    "bs-dependencies": [
+      "rescript-web-types"
+    ]
+  }
