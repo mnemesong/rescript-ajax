@@ -45,11 +45,13 @@ type advAjaxParam =
   | AjaxProxy(proxyParams)
   | AjaxDecompress
 
-let buildBaseUrlParam: (string) => reqParamPart = %raw(`function (baseUrl) {
+let buildBaseUrlParam: (string) => reqParamPart = 
+%raw(`function (baseUrl) {
     return { baseURL: baseUrl };
 }`)
 
-let buildHeadersParam: (array<(string, string)>) => reqParamPart = %raw(`function (headers) {
+let buildHeadersParam: (array<(string, string)>) => reqParamPart = 
+%raw(`function (headers) {
     const result = {};
     headers.forEach(h => {
         result[h[0]] = h[1];
@@ -57,51 +59,67 @@ let buildHeadersParam: (array<(string, string)>) => reqParamPart = %raw(`functio
     return { headers: result };
 }`)
 
-let buildTimeoutParam: (int) => reqParamPart = %raw(`function (timeout) {
+let buildTimeoutParam: (int) => reqParamPart = 
+%raw(`function (timeout) {
     return { timeout: timeout };
 }`)
 
-let buildCredentialsParam: () => reqParamPart = %raw(`function () {
+let buildCredentialsParam: () => reqParamPart = 
+%raw(`function () {
     return { withCredentials: true };
 }`)
 
-let buildAuthParam: (baseAuth) => reqParamPart = %raw(`function(auth) {
+let buildAuthParam: (baseAuth) => reqParamPart = 
+%raw(`function(auth) {
     return { auth: auth };
 }`)
 
-let buildResponseTypeParam: (responseType) => reqParamPart = %raw(`function(resT) {
+let buildResponseTypeParam: (responseType) => reqParamPart = 
+%raw(`function(resT) {
     return { responseType: resT };
 }`)
 
-let buildXsrfCookieNameParam: (string) => reqParamPart = %raw(`function (xsrfcn) {
+let buildXsrfCookieNameParam: (string) => reqParamPart = 
+%raw(`function (xsrfcn) {
     return { xsrfCookieName: xsrfcn };
 }`)
 
-let buildXsrfHeaderNameParam: (string) => reqParamPart = %raw(`function (xsrfhn) {
+let buildXsrfHeaderNameParam: (string) => reqParamPart = 
+%raw(`function (xsrfhn) {
     return { xsrfHeaderName: xsrfhn };
 }`)
 
-let buildMaxContentLengthParam: (int) => reqParamPart = %raw(`function (mcl) {
+let buildMaxContentLengthParam: (int) => reqParamPart = 
+%raw(`function (mcl) {
     return { maxContentLength: mcl };
 }`)
 
-let buildMaxBodyLengthParam: (int) => reqParamPart = %raw(`function (mbl) {
+let buildMaxBodyLengthParam: (int) => reqParamPart = 
+%raw(`function (mbl) {
     return { maxBodyLength: mbl };
 }`)
 
-let buildProxyParam: (proxyParams) => reqParamPart = %raw(`function (proxy) {
+let buildProxyParam: (proxyParams) => reqParamPart = 
+%raw(`function (proxy) {
     return { proxy: proxy };
 }`)
 
-let buildDecompressParam: () => reqParamPart = %raw(`function () {
+let buildDecompressParam: () => reqParamPart = 
+%raw(`function () {
     return { decompress: true };
 }`)
 
-let buildMaxRedirectsParam: (int) => reqParamPart = %raw(`function (mr) {
+let buildMaxRedirectsParam: (int) => reqParamPart = 
+%raw(`function (mr) {
     return { maxRedirects: mr };
 }`)
 
-let containerizeReqParams: (reqParams<{..}>, array<reqParamPart>) => reqParamsContainer =
+type containerizeReqParams<'a> = (
+    reqParams<{..} as 'a>, 
+    array<reqParamPart>
+) => reqParamsContainer
+
+let containerizeReqParams: containerizeReqParams<{..}> =
 %raw(`function (reqParams, reqParamParts) {
     const result = {...reqParams};
     reqParamParts.forEach(rp => {

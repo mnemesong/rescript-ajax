@@ -1,6 +1,7 @@
 type formData
 
-let structToFormData: ({..}) => formData = %raw(` function(params) {
+let structToFormData: ({..}) => formData = 
+%raw(` function(params) {
     const fd = new FormData();
     Object.keys(params).forEach(k => {
         fd.append(k, fd[k]);
@@ -8,7 +9,8 @@ let structToFormData: ({..}) => formData = %raw(` function(params) {
     return fd;
 } `)
 
-let formDataToStruct: (formData) => {..} = %raw(` function (formData) {
+let formDataToStruct: (formData) => {..} = 
+%raw(` function (formData) {
     const rec = {};
     for (const key of formData.keys()) {
         let vals = formData.getAll(key);

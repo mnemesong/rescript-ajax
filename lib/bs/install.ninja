@@ -3,16 +3,16 @@ rule cp
   command = cmd.exe /C copy /Y $i $out >NUL
 rule touch
  command = cmd.exe /C type nul >>$out & copy $out+,, >NUL
-o AjaxData.cmi : cp ..\bs\rescript\AjaxData.cmi
-o AjaxData.cmj : cp ..\bs\rescript\AjaxData.cmj
-o AjaxData.cmt : cp ..\bs\rescript\AjaxData.cmt
-o AjaxData.res : cp ..\..\rescript\AjaxData.res
-o AxiosAjax.cmi : cp ..\bs\rescript\AxiosAjax.cmi
-o AxiosAjax.cmj : cp ..\bs\rescript\AxiosAjax.cmj
-o AxiosAjax.cmt : cp ..\bs\rescript\AxiosAjax.cmt
-o AxiosAjax.res : cp ..\..\rescript\AxiosAjax.res
-o AxiosAjaxParams.cmi : cp ..\bs\rescript\AxiosAjaxParams.cmi
-o AxiosAjaxParams.cmj : cp ..\bs\rescript\AxiosAjaxParams.cmj
-o AxiosAjaxParams.cmt : cp ..\bs\rescript\AxiosAjaxParams.cmt
-o AxiosAjaxParams.res : cp ..\..\rescript\AxiosAjaxParams.res
+o AjaxData.cmi : cp ..\bs\rescript\src\AjaxData.cmi
+o AjaxData.cmj : cp ..\bs\rescript\src\AjaxData.cmj
+o AjaxData.cmt : cp ..\bs\rescript\src\AjaxData.cmt
+o AjaxData.res : cp ..\..\rescript\src\AjaxData.res
+o AxiosAjax.cmi : cp ..\bs\rescript\src\AxiosAjax.cmi
+o AxiosAjax.cmj : cp ..\bs\rescript\src\AxiosAjax.cmj
+o AxiosAjax.cmt : cp ..\bs\rescript\src\AxiosAjax.cmt
+o AxiosAjax.res : cp ..\..\rescript\src\AxiosAjax.res
+o AxiosAjaxParams.cmi : cp ..\bs\rescript\src\AxiosAjaxParams.cmi
+o AxiosAjaxParams.cmj : cp ..\bs\rescript\src\AxiosAjaxParams.cmj
+o AxiosAjaxParams.cmt : cp ..\bs\rescript\src\AxiosAjaxParams.cmt
+o AxiosAjaxParams.res : cp ..\..\rescript\src\AxiosAjaxParams.res
 build install.stamp : touch AjaxData.cmi AjaxData.cmj AxiosAjax.cmi AxiosAjax.cmj AxiosAjaxParams.cmi AxiosAjaxParams.cmj 
