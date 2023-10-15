@@ -8,11 +8,6 @@ var Js_promise = require("rescript/lib/js/js_promise.js");
 var AjaxBrowser = require("../src/AjaxBrowser.bs.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 
-var sendData = ({
-  data1: "val1",
-  data2: 124,
-});
-
 var sendQuerySelectHtmlElem = (function (qs) {
   return document.querySelector(qs);
 });
@@ -70,7 +65,6 @@ document.getElementById("sendPostBtn").onclick = sendPost;
 document.getElementById("sendMultipartBtn").onclick = sendMultipart;
 ;
 
-exports.sendData = sendData;
 exports.sendQuerySelectHtmlElem = sendQuerySelectHtmlElem;
 exports.sendGet = sendGet;
 exports.sendPost = sendPost;

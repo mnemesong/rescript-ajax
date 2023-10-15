@@ -1,17 +1,12 @@
 open AjaxBrowser
-open WebTypes
 open AjaxData
-
-let sendData: {..} = %raw(`({
-  data1: "val1",
-  data2: 124,
-})`)
 
 let sendQuerySelectHtmlElem: string => option<Dom.htmlElement> = %raw(`
 function (qs) {
   return document.querySelector(qs);
 }
 `)
+@@warning("-26")
 
 let sendGet = () => {
   switch sendQuerySelectHtmlElem("#getForm") {
@@ -58,6 +53,7 @@ let sendMultipart = () => {
   }
 }
 
+@@warning("+26")
 %%raw(`
 document.getElementById("sendGetBtn").onclick = sendGet;
 document.getElementById("sendPostBtn").onclick = sendPost;
