@@ -12,23 +12,23 @@ type reqParams<'a> = {
   data: option<formData>,
 }
 
-type ajaxProtocol = [ #http | #https ]
+type ajaxProtocol = [#http | #https]
 
 type proxyParams = {
   protocol: ajaxProtocol,
   host: string,
   port: int,
-  auth: baseAuth
+  auth: baseAuth,
 }
 
-type responseType = 
-  [ #arraybuffer
+type responseType = [
+  | #arraybuffer
   | #document
   | #json
   | #text
   | #stream
   | #blob
-  ]
+]
 
 type advAjaxParam =
   | AjaxBaseUrl(string)
@@ -45,110 +45,122 @@ type advAjaxParam =
   | AjaxProxy(proxyParams)
   | AjaxDecompress
 
-let buildBaseUrlParam: (string) => reqParamPart = 
-%raw(`function (baseUrl) {
-    return { baseURL: baseUrl };
-}`)
+let buildBaseUrlParam: string => reqParamPart = %raw(`
+function (baseUrl) {
+  return { baseURL: baseUrl };
+}
+`)
 
-let buildHeadersParam: (array<(string, string)>) => reqParamPart = 
-%raw(`function (headers) {
-    const result = {};
-    headers.forEach(h => {
-        result[h[0]] = h[1];
+let buildHeadersParam: array<(string, string)> => reqParamPart = %raw(`
+function (headers) {
+  const result = {};
+  headers.forEach(h => {
+    result[h[0]] = h[1];
+  })
+  return { headers: result };
+}
+`)
+
+let buildTimeoutParam: int => reqParamPart = %raw(`
+function (timeout) {
+  return { timeout: timeout };
+}
+`)
+
+let buildCredentialsParam: unit => reqParamPart = %raw(`
+function () {
+  return { withCredentials: true };
+}
+`)
+
+let buildAuthParam: baseAuth => reqParamPart = %raw(`
+function(auth) {
+  return { auth: auth };
+}
+`)
+
+let buildResponseTypeParam: responseType => reqParamPart = %raw(`
+function(resT) {
+  return { responseType: resT };
+}
+`)
+
+let buildXsrfCookieNameParam: string => reqParamPart = %raw(`
+function (xsrfcn) {
+  return { xsrfCookieName: xsrfcn };
+}
+`)
+
+let buildXsrfHeaderNameParam: string => reqParamPart = %raw(`
+function (xsrfhn) {
+  return { xsrfHeaderName: xsrfhn };
+}
+`)
+
+let buildMaxContentLengthParam: int => reqParamPart = %raw(`
+function (mcl) {
+  return { maxContentLength: mcl };
+}
+`)
+
+let buildMaxBodyLengthParam: int => reqParamPart = %raw(`
+function (mbl) {
+  return { maxBodyLength: mbl };
+}
+`)
+
+let buildProxyParam: proxyParams => reqParamPart = %raw(`
+function (proxy) {
+  return { proxy: proxy };
+}
+`)
+
+let buildDecompressParam: unit => reqParamPart = %raw(`
+function () {
+  return { decompress: true };
+}
+`)
+
+let buildMaxRedirectsParam: int => reqParamPart = %raw(`
+function (mr) {
+  return { maxRedirects: mr };
+}
+`)
+
+type containerizeReqParams<'a> = (reqParams<{..} as 'a>, array<reqParamPart>) => reqParamsContainer
+
+let containerizeReqParams: containerizeReqParams<{..}> = %raw(`
+function (reqParams, reqParamParts) {
+  const result = {...reqParams};
+  reqParamParts.forEach(rp => {
+    Object.keys(rp).forEach(k => {
+      result[k] = rp[k];
     })
-    return { headers: result };
-}`)
-
-let buildTimeoutParam: (int) => reqParamPart = 
-%raw(`function (timeout) {
-    return { timeout: timeout };
-}`)
-
-let buildCredentialsParam: () => reqParamPart = 
-%raw(`function () {
-    return { withCredentials: true };
-}`)
-
-let buildAuthParam: (baseAuth) => reqParamPart = 
-%raw(`function(auth) {
-    return { auth: auth };
-}`)
-
-let buildResponseTypeParam: (responseType) => reqParamPart = 
-%raw(`function(resT) {
-    return { responseType: resT };
-}`)
-
-let buildXsrfCookieNameParam: (string) => reqParamPart = 
-%raw(`function (xsrfcn) {
-    return { xsrfCookieName: xsrfcn };
-}`)
-
-let buildXsrfHeaderNameParam: (string) => reqParamPart = 
-%raw(`function (xsrfhn) {
-    return { xsrfHeaderName: xsrfhn };
-}`)
-
-let buildMaxContentLengthParam: (int) => reqParamPart = 
-%raw(`function (mcl) {
-    return { maxContentLength: mcl };
-}`)
-
-let buildMaxBodyLengthParam: (int) => reqParamPart = 
-%raw(`function (mbl) {
-    return { maxBodyLength: mbl };
-}`)
-
-let buildProxyParam: (proxyParams) => reqParamPart = 
-%raw(`function (proxy) {
-    return { proxy: proxy };
-}`)
-
-let buildDecompressParam: () => reqParamPart = 
-%raw(`function () {
-    return { decompress: true };
-}`)
-
-let buildMaxRedirectsParam: (int) => reqParamPart = 
-%raw(`function (mr) {
-    return { maxRedirects: mr };
-}`)
-
-type containerizeReqParams<'a> = (
-    reqParams<{..} as 'a>, 
-    array<reqParamPart>
-) => reqParamsContainer
-
-let containerizeReqParams: containerizeReqParams<{..}> =
-%raw(`function (reqParams, reqParamParts) {
-    const result = {...reqParams};
-    reqParamParts.forEach(rp => {
-        Object.keys(rp).forEach(k => {
-            result[k] = rp[k];
-        })
-    })
-    return result;
-}`)
+  })
+  return result;
+}
+`)
 
 let buildParamsContainer = (
-    reqParams: reqParams<{..}>,
-    advAjaxParams: array<advAjaxParam>
+  reqParams: reqParams<{..}>,
+  advAjaxParams: array<advAjaxParam>,
 ): reqParamsContainer => {
-    let reqParamsParts: array<reqParamPart> = advAjaxParams 
-        -> Array.map((aap) => switch aap {
-            | AjaxBaseUrl(url) => buildBaseUrlParam(url)
-            | AjaxHeaders(headers) => buildHeadersParam(headers)
-            | AjaxTimeout(timeout) => buildTimeoutParam(timeout)
-            | AjaxWithCredentials => buildCredentialsParam()
-            | AjaxAuth(auth) => buildAuthParam(auth)
-            | AjaxResponseType(res) => buildResponseTypeParam(res)
-            | AjaxXsrfCookieName(cn) => buildXsrfCookieNameParam(cn)
-            | AjaxXsrfHeaderName(hn) => buildXsrfHeaderNameParam(hn)
-            | AjaxMaxContentLength(len) => buildMaxContentLengthParam(len)
-            | AjaxMaxBodyLength(len) => buildMaxBodyLengthParam(len)
-            | AjaxMaxRedirects(cnt) => buildMaxRedirectsParam(cnt)
-            | AjaxProxy(params) => buildProxyParam(params)
-            | AjaxDecompress => buildDecompressParam() 
-        })
-    containerizeReqParams(reqParams, reqParamsParts)
+  let reqParamsParts: array<reqParamPart> = advAjaxParams->Array.map(aap =>
+    switch aap {
+    | AjaxBaseUrl(url) => buildBaseUrlParam(url)
+    | AjaxHeaders(headers) => buildHeadersParam(headers)
+    | AjaxTimeout(timeout) => buildTimeoutParam(timeout)
+    | AjaxWithCredentials => buildCredentialsParam()
+    | AjaxAuth(auth) => buildAuthParam(auth)
+    | AjaxResponseType(res) => buildResponseTypeParam(res)
+    | AjaxXsrfCookieName(cn) => buildXsrfCookieNameParam(cn)
+    | AjaxXsrfHeaderName(hn) => buildXsrfHeaderNameParam(hn)
+    | AjaxMaxContentLength(len) => buildMaxContentLengthParam(len)
+    | AjaxMaxBodyLength(len) => buildMaxBodyLengthParam(len)
+    | AjaxMaxRedirects(cnt) => buildMaxRedirectsParam(cnt)
+    | AjaxProxy(params) => buildProxyParam(params)
+    | AjaxDecompress => buildDecompressParam()
+    }
+  )
+  containerizeReqParams(reqParams, reqParamsParts)
 }

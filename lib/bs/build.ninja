@@ -8,7 +8,7 @@ rule deps
   restat = 1
 o rescript\src\AjaxData.d : deps rescript\src\AjaxData.ast
 rule mij
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I "rescript\src" -I rescript -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I "rescript\app-test" -I "rescript\src" -I rescript -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
   dyndep = 1
   restat = 1
 o rescript\src\AjaxData.cmj rescript\src\AjaxData.cmi ..\js\rescript\src\AjaxData.bs.js : mij rescript\src\AjaxData.ast
