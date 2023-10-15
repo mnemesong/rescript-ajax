@@ -10,10 +10,39 @@
 
 <body>
   <div>
-    <button id="sendGetBtn">Send Get</button>
+    <form id="getForm" method="get">
+      <div>
+        <input name="data1">
+      </div>
+      <div>
+        <textarea name="data2"></textarea>
+      </div>
+      <button id="sendGetBtn" type="button">Send Get</button>
+    </form>
   </div>
+  <hr>
   <div>
-    <button id="sendPostBtn">Send Post</button>
+    <form id="postForm" method="post">
+      <div>
+        <input name="data1">
+      </div>
+      <div>
+        <textarea name="data2"></textarea>
+      </div>
+      <button id="sendPostBtn" type="button">Send Post</button>
+    </form>
+  </div>
+  <hr>
+  <div>
+    <form id="multipartForm" method="post" enctype="multipart/form-data">
+      <div>
+        <input name="data1">
+      </div>
+      <div>
+        <input name="file1" type="file">
+      </div>
+      <button id="sendMultipartBtn" type="button">Send Multipart</button>
+    </form>
   </div>
 </body>
 <script src="./index.js"></script>

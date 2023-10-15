@@ -1,6 +1,7 @@
 open AjaxData
 open WebTypes
 open AjaxParams
+open Belt
 
 type axios
 type url = string
@@ -92,7 +93,14 @@ module MakeAjaxManager: MakeAjaxManager = (AE: AjaxEnv) => {
         },
       }
     }
-    let paramsContainer = buildParamsContainer(reqParams, advParams)
+    let paramsContainer = switch action {
+    | FormUrlencoded(_, _) =>
+      advParams->Array.concat([AjaxHeaders([("Content-Type", "application/json")])])
+        |> buildParamsContainer(reqParams)
+    | MultipartFormData(_, _) =>
+      advParams->Array.concat([AjaxHeaders([("Content-Type", "multipart/form-data")])])
+        |> buildParamsContainer(reqParams)
+    }
     sendAxios(AE.getAxios(), paramsContainer)
   }
 }

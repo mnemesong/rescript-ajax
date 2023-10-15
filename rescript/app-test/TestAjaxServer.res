@@ -10,7 +10,6 @@ console.log(staticPath);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(multer().none());
 app.use(express.static(staticPath));
 
 app.get('/get', (req, res) => {
@@ -19,6 +18,10 @@ app.get('/get', (req, res) => {
 
 app.post('/post', (req, res) => {
   res.json(req.body);
+});
+
+app.post('/multipart', multer({ dist: "/upload" }).single('file1'), (req, res) => {
+  res.json(req.file);
 });
 
 app.listen(port, () => {
