@@ -7,12 +7,28 @@ o AjaxData.cmi : cp ..\bs\rescript\src\AjaxData.cmi
 o AjaxData.cmj : cp ..\bs\rescript\src\AjaxData.cmj
 o AjaxData.cmt : cp ..\bs\rescript\src\AjaxData.cmt
 o AjaxData.res : cp ..\..\rescript\src\AjaxData.res
-o AxiosAjax.cmi : cp ..\bs\rescript\src\AxiosAjax.cmi
-o AxiosAjax.cmj : cp ..\bs\rescript\src\AxiosAjax.cmj
-o AxiosAjax.cmt : cp ..\bs\rescript\src\AxiosAjax.cmt
-o AxiosAjax.res : cp ..\..\rescript\src\AxiosAjax.res
-o AxiosAjaxParams.cmi : cp ..\bs\rescript\src\AxiosAjaxParams.cmi
-o AxiosAjaxParams.cmj : cp ..\bs\rescript\src\AxiosAjaxParams.cmj
-o AxiosAjaxParams.cmt : cp ..\bs\rescript\src\AxiosAjaxParams.cmt
-o AxiosAjaxParams.res : cp ..\..\rescript\src\AxiosAjaxParams.res
-build install.stamp : touch AjaxData.cmi AjaxData.cmj AxiosAjax.cmi AxiosAjax.cmj AxiosAjaxParams.cmi AxiosAjaxParams.cmj 
+o AjaxNode.cmi : cp ..\bs\rescript\src\AjaxNode.cmi
+o AjaxNode.cmj : cp ..\bs\rescript\src\AjaxNode.cmj
+o AjaxNode.cmt : cp ..\bs\rescript\src\AjaxNode.cmt
+o AjaxNode.res : cp ..\..\rescript\src\AjaxNode.res
+o AjaxParams.cmi : cp ..\bs\rescript\src\AjaxParams.cmi
+o AjaxParams.cmj : cp ..\bs\rescript\src\AjaxParams.cmj
+o AjaxParams.cmt : cp ..\bs\rescript\src\AjaxParams.cmt
+o AjaxParams.res : cp ..\..\rescript\src\AjaxParams.res
+o AjaxBrowser.cmi : cp ..\bs\rescript\src\AjaxBrowser.cmi
+o AjaxBrowser.cmj : cp ..\bs\rescript\src\AjaxBrowser.cmj
+o AjaxBrowser.cmt : cp ..\bs\rescript\src\AjaxBrowser.cmt
+o AjaxBrowser.res : cp ..\..\rescript\src\AjaxBrowser.res
+o AjaxManager.cmi : cp ..\bs\rescript\src\AjaxManager.cmi
+o AjaxManager.cmj : cp ..\bs\rescript\src\AjaxManager.cmj
+o AjaxManager.cmt : cp ..\bs\rescript\src\AjaxManager.cmt
+o AjaxManager.res : cp ..\..\rescript\src\AjaxManager.res
+o TestAjaxServer.cmi : cp ..\bs\rescript\app-test\TestAjaxServer.cmi
+o TestAjaxServer.cmj : cp ..\bs\rescript\app-test\TestAjaxServer.cmj
+o TestAjaxServer.cmt : cp ..\bs\rescript\app-test\TestAjaxServer.cmt
+o TestAjaxServer.res : cp ..\..\rescript\app-test\TestAjaxServer.res
+o TestAjaxBrowser.cmi : cp ..\bs\rescript\app-test\TestAjaxBrowser.cmi
+o TestAjaxBrowser.cmj : cp ..\bs\rescript\app-test\TestAjaxBrowser.cmj
+o TestAjaxBrowser.cmt : cp ..\bs\rescript\app-test\TestAjaxBrowser.cmt
+o TestAjaxBrowser.res : cp ..\..\rescript\app-test\TestAjaxBrowser.res
+build install.stamp : touch AjaxData.cmi AjaxData.cmj AjaxNode.cmi AjaxNode.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj TestAjaxServer.cmi TestAjaxServer.cmj TestAjaxBrowser.cmi TestAjaxBrowser.cmj 

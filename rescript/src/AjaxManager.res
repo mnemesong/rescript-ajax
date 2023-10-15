@@ -1,6 +1,6 @@
 open AjaxData
 open WebTypes
-open AxiosAjaxParams
+open AjaxParams
 
 type axios
 type url = string
