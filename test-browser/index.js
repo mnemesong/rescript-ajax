@@ -108,7 +108,7 @@ var formDataToStruct = (function (formData) {
   const rec = {};
   for (const key of formData.keys()) {
     let vals = formData.getAll(key);
-    (vals.length > 0) 
+    (vals.length > 1) 
       ? rec[key] = vals
       : rec[key] = vals[0];
   }

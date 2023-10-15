@@ -54,3 +54,8 @@
 24	54	13581987714640948	rescript/app-test/TestAjaxBrowser.cmj	9b043625fcb894f9
 24	54	13581987714640948	rescript/app-test/TestAjaxBrowser.cmi	9b043625fcb894f9
 24	54	13581987714640948	../js/rescript/app-test/TestAjaxBrowser.bs.js	9b043625fcb894f9
+1	19	13581991354313863	rescript/src/AjaxData.ast	bc0963433a2b6063
+19	28	13581991354313863	rescript/src/AjaxData.d	7d7cdde0b9175fd
+28	52	13581991354313863	rescript/src/AjaxData.cmj	67a25e19c835a8ff
+28	52	13581991354313863	rescript/src/AjaxData.cmi	67a25e19c835a8ff
+28	52	13581991354313863	../js/rescript/src/AjaxData.bs.js	67a25e19c835a8ff
