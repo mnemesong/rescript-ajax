@@ -9,3 +9,7 @@ module AjaxEnvNode = {
 }
 
 module AjaxNode = MakeAjaxManager(AjaxEnvNode)
+
+module AjaxNodeUnknown = MakeAjaxManager(AjaxEnvNode, AjaxData.DataUnknown)
+
+module AjaxNodeText = MakeAjaxManager(AjaxEnvNode, AjaxData.DataText)

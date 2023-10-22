@@ -9,3 +9,7 @@ module AjaxEnvBrowser = {
 }
 
 module AjaxBrowser = MakeAjaxManager(AjaxEnvBrowser)
+
+module AjaxBrowserUnknown = MakeAjaxManager(AjaxEnvBrowser, AjaxData.DataUnknown)
+
+module AjaxBrowserText = MakeAjaxManager(AjaxEnvBrowser, AjaxData.DataText)

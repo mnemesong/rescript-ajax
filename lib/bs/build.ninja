@@ -4,7 +4,7 @@ rule astj
   command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
 o rescript\test-node\TestAjaxNode.ast : astj ..\..\rescript\test-node\TestAjaxNode.res
 rule deps
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -hash 79037f354c4ac1ec0592c2036e81c09f $in
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -hash 1ff8a73df7339119fb4446ec5aa81891 $in
   restat = 1
 o rescript\test-node\TestAjaxNode.d : deps rescript\test-node\TestAjaxNode.ast
 rule mij
@@ -24,6 +24,9 @@ o rescript\src\AjaxData.cmj rescript\src\AjaxData.cmi ..\js\rescript\src\AjaxDat
 o rescript\src\AjaxNode.ast : astj ..\..\rescript\src\AjaxNode.res
 o rescript\src\AjaxNode.d : deps rescript\src\AjaxNode.ast
 o rescript\src\AjaxNode.cmj rescript\src\AjaxNode.cmi ..\js\rescript\src\AjaxNode.bs.js : mij rescript\src\AjaxNode.ast
+o rescript\src\AjaxConfig.ast : astj ..\..\rescript\src\AjaxConfig.res
+o rescript\src\AjaxConfig.d : deps rescript\src\AjaxConfig.ast
+o rescript\src\AjaxConfig.cmj rescript\src\AjaxConfig.cmi ..\js\rescript\src\AjaxConfig.bs.js : mij rescript\src\AjaxConfig.ast
 o rescript\src\AjaxParams.ast : astj ..\..\rescript\src\AjaxParams.res
 o rescript\src\AjaxParams.d : deps rescript\src\AjaxParams.ast
 o rescript\src\AjaxParams.cmj rescript\src\AjaxParams.cmi ..\js\rescript\src\AjaxParams.bs.js : mij rescript\src\AjaxParams.ast

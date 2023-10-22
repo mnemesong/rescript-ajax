@@ -23,6 +23,10 @@ o AjaxNode.cmi : cp ..\bs\rescript\src\AjaxNode.cmi
 o AjaxNode.cmj : cp ..\bs\rescript\src\AjaxNode.cmj
 o AjaxNode.cmt : cp ..\bs\rescript\src\AjaxNode.cmt
 o AjaxNode.res : cp ..\..\rescript\src\AjaxNode.res
+o AjaxConfig.cmi : cp ..\bs\rescript\src\AjaxConfig.cmi
+o AjaxConfig.cmj : cp ..\bs\rescript\src\AjaxConfig.cmj
+o AjaxConfig.cmt : cp ..\bs\rescript\src\AjaxConfig.cmt
+o AjaxConfig.res : cp ..\..\rescript\src\AjaxConfig.res
 o AjaxParams.cmi : cp ..\bs\rescript\src\AjaxParams.cmi
 o AjaxParams.cmj : cp ..\bs\rescript\src\AjaxParams.cmj
 o AjaxParams.cmt : cp ..\bs\rescript\src\AjaxParams.cmt
@@ -35,4 +39,4 @@ o AjaxManager.cmi : cp ..\bs\rescript\src\AjaxManager.cmi
 o AjaxManager.cmj : cp ..\bs\rescript\src\AjaxManager.cmj
 o AjaxManager.cmt : cp ..\bs\rescript\src\AjaxManager.cmt
 o AjaxManager.res : cp ..\..\rescript\src\AjaxManager.res
-build install.stamp : touch TestAjaxNode.cmi TestAjaxNode.cmj TestAjaxServer.cmi TestAjaxServer.cmj TestAjaxBrowser.cmi TestAjaxBrowser.cmj AjaxData.cmi AjaxData.cmj AjaxNode.cmi AjaxNode.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj 
+build install.stamp : touch TestAjaxNode.cmi TestAjaxNode.cmj TestAjaxServer.cmi TestAjaxServer.cmj TestAjaxBrowser.cmi TestAjaxBrowser.cmj AjaxData.cmi AjaxData.cmj AjaxNode.cmi AjaxNode.cmj AjaxConfig.cmi AjaxConfig.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj 

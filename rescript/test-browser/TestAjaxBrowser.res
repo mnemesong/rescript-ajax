@@ -1,5 +1,5 @@
 open AjaxBrowser
-open AjaxData
+open AjaxParams
 
 let sendQuerySelectHtmlElem: string => option<Dom.htmlElement> = %raw(`
 function (qs) {
@@ -13,7 +13,7 @@ let sendGet = async () => {
   | None => Js.Console.log("Can't send data")
   | Some(htmlEl) => {
       let res =
-        await FormUrlencoded(#get, "/get")->AjaxBrowser.sendAjaxFormData(
+        await FormUrlencoded(#get, "/get")->AjaxBrowserUnknown.sendAjaxFormData(
           collectFormData(htmlEl),
           [],
         )
@@ -27,7 +27,7 @@ let sendPost = async () => {
   | None => Js.Console.log("Can't send data")
   | Some(htmlEl) => {
       let res =
-        await FormUrlencoded(#post, "/post")->AjaxBrowser.sendAjaxFormData(
+        await FormUrlencoded(#post, "/post")->AjaxBrowserUnknown.sendAjaxFormData(
           collectFormData(htmlEl),
           [],
         )
@@ -41,7 +41,7 @@ let sendMultipart = async () => {
   | None => Js.Console.log("Can't send data")
   | Some(htmlEl) => {
       let res =
-        await MultipartFormData(#post, "/multipart")->AjaxBrowser.sendAjaxFormData(
+        await MultipartFormData(#post, "/multipart")->AjaxBrowserUnknown.sendAjaxFormData(
           collectFormData(htmlEl),
           [],
         )

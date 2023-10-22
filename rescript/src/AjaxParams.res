@@ -1,166 +1,79 @@
-open Belt
-open AjaxData
-open WebTypes
+type formData
 
-type reqParamPart
-type reqParamsContainer
-
-type reqParams<'a> = {
-  method: method,
-  url: string,
-  params: option<{..} as 'a>,
-  data: option<formData>,
-}
-
-type ajaxProtocol = [#http | #https]
-
-type proxyParams = {
-  protocol: ajaxProtocol,
-  host: string,
-  port: int,
-  auth: baseAuth,
-}
-
-type responseType = [
-  | #arraybuffer
-  | #document
-  | #json
-  | #text
-  | #stream
-  | #blob
-]
-
-type advAjaxParam =
-  | AjaxBaseUrl(string)
-  | AjaxHeaders(array<(string, string)>)
-  | AjaxTimeout(int)
-  | AjaxWithCredentials
-  | AjaxAuth(baseAuth)
-  | AjaxResponseType(responseType)
-  | AjaxXsrfCookieName(string)
-  | AjaxXsrfHeaderName(string)
-  | AjaxMaxContentLength(int)
-  | AjaxMaxBodyLength(int)
-  | AjaxMaxRedirects(int)
-  | AjaxProxy(proxyParams)
-  | AjaxDecompress
-
-let buildBaseUrlParam: string => reqParamPart = %raw(`
-function (baseUrl) {
-  return { baseURL: baseUrl };
-}
+let structToFormData: {..} => formData = %raw(` 
+function(params) {
+  const fd = new FormData();
+  Object.keys(params).forEach(k => {
+    fd.append(k, params[k]);
+  });
+  return fd;
+} 
 `)
 
-let buildHeadersParam: array<(string, string)> => reqParamPart = %raw(`
-function (headers) {
-  const result = {};
-  headers.forEach(h => {
-    result[h[0]] = h[1];
-  })
-  return { headers: result };
-}
-`)
+let getEmpty: {..} = %raw(`{}`)
 
-let buildTimeoutParam: int => reqParamPart = %raw(`
-function (timeout) {
-  return { timeout: timeout };
-}
-`)
+let formDataToStruct: formData => {..} = %raw(` 
+function (formData) {
+  const rec = {};
+  for (const key of formData.keys()) {
+    let vals = formData.getAll(key);
+    (vals.length > 1) 
+      ? rec[key] = vals
+      : rec[key] = vals[0];
+  }
+  return rec;
+} `)
 
-let buildCredentialsParam: unit => reqParamPart = %raw(`
-function () {
-  return { withCredentials: true };
-}
-`)
-
-let buildAuthParam: baseAuth => reqParamPart = %raw(`
-function(auth) {
-  return { auth: auth };
-}
-`)
-
-let buildResponseTypeParam: responseType => reqParamPart = %raw(`
-function(resT) {
-  return { responseType: resT };
-}
-`)
-
-let buildXsrfCookieNameParam: string => reqParamPart = %raw(`
-function (xsrfcn) {
-  return { xsrfCookieName: xsrfcn };
-}
-`)
-
-let buildXsrfHeaderNameParam: string => reqParamPart = %raw(`
-function (xsrfhn) {
-  return { xsrfHeaderName: xsrfhn };
-}
-`)
-
-let buildMaxContentLengthParam: int => reqParamPart = %raw(`
-function (mcl) {
-  return { maxContentLength: mcl };
-}
-`)
-
-let buildMaxBodyLengthParam: int => reqParamPart = %raw(`
-function (mbl) {
-  return { maxBodyLength: mbl };
-}
-`)
-
-let buildProxyParam: proxyParams => reqParamPart = %raw(`
-function (proxy) {
-  return { proxy: proxy };
-}
-`)
-
-let buildDecompressParam: unit => reqParamPart = %raw(`
-function () {
-  return { decompress: true };
-}
-`)
-
-let buildMaxRedirectsParam: int => reqParamPart = %raw(`
-function (mr) {
-  return { maxRedirects: mr };
-}
-`)
-
-type containerizeReqParams<'a> = (reqParams<{..} as 'a>, array<reqParamPart>) => reqParamsContainer
-
-let containerizeReqParams: containerizeReqParams<{..}> = %raw(`
-function (reqParams, reqParamParts) {
-  const result = {...reqParams};
-  reqParamParts.forEach(rp => {
-    Object.keys(rp).forEach(k => {
-      result[k] = rp[k];
-    })
-  })
-  return result;
-}
-`)
-
-let buildParamsContainer = (
-  reqParams: reqParams<{..}>,
-  advAjaxParams: array<advAjaxParam>,
-): reqParamsContainer => {
-  let reqParamsParts: array<reqParamPart> = advAjaxParams->Array.map(aap =>
-    switch aap {
-    | AjaxBaseUrl(url) => buildBaseUrlParam(url)
-    | AjaxHeaders(headers) => buildHeadersParam(headers)
-    | AjaxTimeout(timeout) => buildTimeoutParam(timeout)
-    | AjaxWithCredentials => buildCredentialsParam()
-    | AjaxAuth(auth) => buildAuthParam(auth)
-    | AjaxResponseType(res) => buildResponseTypeParam(res)
-    | AjaxXsrfCookieName(cn) => buildXsrfCookieNameParam(cn)
-    | AjaxXsrfHeaderName(hn) => buildXsrfHeaderNameParam(hn)
-    | AjaxMaxContentLength(len) => buildMaxContentLengthParam(len)
-    | AjaxMaxBodyLength(len) => buildMaxBodyLengthParam(len)
-    | AjaxMaxRedirects(cnt) => buildMaxRedirectsParam(cnt)
-    | AjaxProxy(params) => buildProxyParam(params)
-    | AjaxDecompress => buildDecompressParam()
+let collectFormData: Dom.htmlElement => formData = %raw(`
+function (container) {
+  const formData = new FormData();
+  const inputs = Array
+    .from(container.getElementsByTagName('input'));
+  inputs.forEach((input) => {
+    if(input.type === 'checkbox') {
+      formData.append(input.name, input.checked ? input.value : '');
+    } else if (input.type === 'radio') {
+      if(input.checked) {
+        formData.append(input.name, input.value);
+      }
+    } else if(input.type === 'file') {
+      if(input.files.length === 1) {
+        formData.append(input.name, input.files[0]);
+      } else {
+        Array.from(input.files)
+          .forEach((el) => formData.append(input.name + '[]', el));
+      }
+    } else {
+      formData.append(input.name, input.value);
     }
-  )
-  containerizeReqParams(reqParams, reqParamsParts)
+  });
+  const textAreas = Array
+    .from(container.getElementsByTagName('textarea'));
+  textAreas.forEach((textarea) => {
+    formData.append(textarea.name, textarea.value);
+  });
+  const selects = Array
+    .from(container.getElementsByTagName('select'));
+  selects.forEach((select) => {
+    formData.append(select.name, select.value);
+  });
+  return formData;
 }
+`)
+
+let mergeFormData: (formData, formData) => formData = %raw(`
+function (fd1, fd2) {
+  const fd = new FormData();
+  for (const key of fd1.keys()) {
+    fd1.getAll(key).forEach(v => {
+      fd.append(key, v);
+    });
+  }
+  for (const key of fd2.keys()) {
+    fd2.getAll(key).forEach(v => {
+      fd.append(key, v);
+    });
+  }
+  return fd;
+}
+`)
