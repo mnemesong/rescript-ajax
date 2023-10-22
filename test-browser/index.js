@@ -31,6 +31,8 @@ var structToFormData = (function(params) {
   return fd;
 });
 
+var getEmpty = {};
+
 var formDataToStruct = (function (formData) {
   const rec = {};
   for (const key of formData.keys()) {
@@ -93,6 +95,7 @@ var mergeFormData = (function (fd1, fd2) {
 });
 
 exports.structToFormData = structToFormData;
+exports.getEmpty = getEmpty;
 exports.formDataToStruct = formDataToStruct;
 exports.collectFormData = collectFormData;
 exports.mergeFormData = mergeFormData;
@@ -109,7 +112,13 @@ var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 
 var sendAxios = (function (axios, params) {
-    return axios(params);
+    return axios(params).then(res => {
+      return {
+        data: res.data,
+        status: res.status,
+        headers: res.headers
+      }
+    });
 });
 
 function MakeAjaxManager(AE) {
@@ -314,7 +323,6 @@ exports.buildParamsContainer = buildParamsContainer;
 
 var Curry = require("rescript/lib/js/curry.js");
 var AjaxData = require("../src/AjaxData.bs.js");
-var Js_promise = require("rescript/lib/js/js_promise.js");
 var AjaxBrowser = require("../src/AjaxBrowser.bs.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 
@@ -322,52 +330,46 @@ var sendQuerySelectHtmlElem = (function (qs) {
   return document.querySelector(qs);
 });
 
-function sendGet(param) {
+async function sendGet(param) {
   var htmlEl = sendQuerySelectHtmlElem("#getForm");
   if (htmlEl !== undefined) {
-    Js_promise.then_((function (a) {
-            console.log(a);
-            return Promise.resolve(undefined);
-          }), Curry._3(AjaxBrowser.AjaxBrowser.sendAjaxFormData, {
-              TAG: /* FormUrlencoded */0,
-              _0: "get",
-              _1: "/get"
-            }, AjaxData.collectFormData(Caml_option.valFromOption(htmlEl)), []));
-  } else {
-    console.log("Can't send data");
+    var res = await Curry._3(AjaxBrowser.AjaxBrowser.sendAjaxFormData, {
+          TAG: /* FormUrlencoded */0,
+          _0: "get",
+          _1: "/get"
+        }, AjaxData.collectFormData(Caml_option.valFromOption(htmlEl)), []);
+    console.log(res);
+    return ;
   }
+  console.log("Can't send data");
 }
 
-function sendPost(param) {
+async function sendPost(param) {
   var htmlEl = sendQuerySelectHtmlElem("#postForm");
   if (htmlEl !== undefined) {
-    Js_promise.then_((function (a) {
-            console.log(a);
-            return Promise.resolve(undefined);
-          }), Curry._3(AjaxBrowser.AjaxBrowser.sendAjaxFormData, {
-              TAG: /* FormUrlencoded */0,
-              _0: "post",
-              _1: "/post"
-            }, AjaxData.collectFormData(Caml_option.valFromOption(htmlEl)), []));
-  } else {
-    console.log("Can't send data");
+    var res = await Curry._3(AjaxBrowser.AjaxBrowser.sendAjaxFormData, {
+          TAG: /* FormUrlencoded */0,
+          _0: "post",
+          _1: "/post"
+        }, AjaxData.collectFormData(Caml_option.valFromOption(htmlEl)), []);
+    console.log(res);
+    return ;
   }
+  console.log("Can't send data");
 }
 
-function sendMultipart(param) {
+async function sendMultipart(param) {
   var htmlEl = sendQuerySelectHtmlElem("#multipartForm");
   if (htmlEl !== undefined) {
-    Js_promise.then_((function (a) {
-            console.log(a);
-            return Promise.resolve(undefined);
-          }), Curry._3(AjaxBrowser.AjaxBrowser.sendAjaxFormData, {
-              TAG: /* MultipartFormData */1,
-              _0: "post",
-              _1: "/multipart"
-            }, AjaxData.collectFormData(Caml_option.valFromOption(htmlEl)), []));
-  } else {
-    console.log("Can't send data");
+    var res = await Curry._3(AjaxBrowser.AjaxBrowser.sendAjaxFormData, {
+          TAG: /* MultipartFormData */1,
+          _0: "post",
+          _1: "/multipart"
+        }, AjaxData.collectFormData(Caml_option.valFromOption(htmlEl)), []);
+    console.log(res);
+    return ;
   }
+  console.log("Can't send data");
 }
 
 document.getElementById("sendGetBtn").onclick = sendGet;
@@ -381,7 +383,7 @@ exports.sendPost = sendPost;
 exports.sendMultipart = sendMultipart;
 /*  Not a pure module */
 
-},{"../src/AjaxBrowser.bs.js":1,"../src/AjaxData.bs.js":2,"rescript/lib/js/caml_option.js":13,"rescript/lib/js/curry.js":14,"rescript/lib/js/js_promise.js":17}],6:[function(require,module,exports){
+},{"../src/AjaxBrowser.bs.js":1,"../src/AjaxData.bs.js":2,"rescript/lib/js/caml_option.js":13,"rescript/lib/js/curry.js":14}],6:[function(require,module,exports){
 (function (global,Buffer){(function (){
 // Axios v1.5.1 Copyright (c) 2023 Matt Zabriskie and contributors
 'use strict';
@@ -7403,21 +7405,4 @@ exports.floor = floor;
 exports.random_int = random_int;
 /* No side effect */
 
-},{"./js_int.js":15}],17:[function(require,module,exports){
-'use strict';
-
-var Curry = require("./curry.js");
-
-function then_(arg1, obj) {
-  return obj.then(Curry.__1(arg1));
-}
-
-function $$catch(arg1, obj) {
-  return obj.catch(Curry.__1(arg1));
-}
-
-exports.then_ = then_;
-exports.$$catch = $$catch;
-/* No side effect */
-
-},{"./curry.js":14}]},{},[5]);
+},{"./js_int.js":15}]},{},[5]);

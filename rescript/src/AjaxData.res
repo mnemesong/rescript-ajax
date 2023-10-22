@@ -10,6 +10,8 @@ function(params) {
 } 
 `)
 
+let getEmpty: {..} = %raw(`{}`)
+
 let formDataToStruct: formData => {..} = %raw(` 
 function (formData) {
   const rec = {};
