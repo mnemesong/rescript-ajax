@@ -1,6 +1,6 @@
 {
   "name": "rescript-ajax",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "rescript module for sendig ajax via axious",
   "scripts": {
     "res:build": "rescript",
