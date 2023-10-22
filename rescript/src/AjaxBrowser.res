@@ -1,6 +1,6 @@
 open AjaxManager
 
-module AjaxEnvBrowser = {
+module AjaxEnvBrowser: AjaxEnv = {
   let getAxios: unit => axios = %raw(`
   function () {
     return require('axios/dist/browser/axios.cjs');
@@ -8,8 +8,14 @@ module AjaxEnvBrowser = {
   `)
 }
 
-module AjaxBrowser = MakeAjaxManager(AjaxEnvBrowser)
+module type AjaxBrowser = (Data: AjaxData.Data) => (AjaxManager with type data = Data.data)
+module AjaxBrowser: AjaxBrowser = MakeAjaxManager(AjaxEnvBrowser)
 
-module AjaxBrowserUnknown = MakeAjaxManager(AjaxEnvBrowser, AjaxData.DataUnknown)
+module type AjaxBrowserUnknown = AjaxManager with type data = unknown
+module AjaxBrowserUnknown: AjaxBrowserUnknown = MakeAjaxManager(
+  AjaxEnvBrowser,
+  AjaxData.DataUnknown,
+)
 
-module AjaxBrowserText = MakeAjaxManager(AjaxEnvBrowser, AjaxData.DataText)
+module type AjaxBrowserText = AjaxManager with type data = string
+module AjaxBrowserText: AjaxBrowserText = MakeAjaxManager(AjaxEnvBrowser, AjaxData.DataText)
