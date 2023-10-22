@@ -1,11 +1,14 @@
+open AjaxParams
+open WebTypes
+
 type reqConfigPart
 type reqConfigContainer
 
 type reqConfig<'a> = {
-  method: WebTypes.method,
+  method: method,
   url: string,
-  params: option<{..} as 'a>,
-  data: option<AjaxParams.formData>,
+  params: option<'a>,
+  data: option<formData>,
 }
 
 type ajaxProtocol = [#http | #https]
@@ -14,7 +17,7 @@ type proxyConfig = {
   protocol: ajaxProtocol,
   host: string,
   port: int,
-  auth: WebTypes.baseAuth,
+  auth: baseAuth,
 }
 
 type responseType = [
@@ -31,7 +34,7 @@ type advAjaxParam =
   | AjaxHeaders(array<(string, string)>)
   | AjaxTimeout(int)
   | AjaxWithCredentials
-  | AjaxAuth(WebTypes.baseAuth)
+  | AjaxAuth(baseAuth)
   | AjaxResponseType(responseType)
   | AjaxXsrfCookieName(string)
   | AjaxXsrfHeaderName(string)
@@ -49,7 +52,7 @@ let buildTimeoutParam: int => reqConfigPart
 
 let buildCredentialsParam: unit => reqConfigPart
 
-let buildAuthParam: WebTypes.baseAuth => reqConfigPart
+let buildAuthParam: baseAuth => reqConfigPart
 
 let buildResponseTypeParam: responseType => reqConfigPart
 
@@ -67,8 +70,6 @@ let buildDecompressParam: unit => reqConfigPart
 
 let buildMaxRedirectsParam: int => reqConfigPart
 
-type containerizereqConfig<'a> = (reqConfig<{..} as 'a>, array<reqConfigPart>) => reqConfigContainer
+let containerizereqConfig: (reqConfig<'a>, array<reqConfigPart>) => reqConfigContainer
 
-let containerizereqConfig: containerizereqConfig<{..}>
-
-let buildParamsContainer: (reqConfig<{..}>, array<advAjaxParam>) => reqConfigContainer
+let buildParamsContainer: (reqConfig<'p>, array<advAjaxParam>) => reqConfigContainer

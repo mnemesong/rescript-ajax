@@ -8,7 +8,7 @@ type reqConfigContainer
 type reqConfig<'a> = {
   method: method,
   url: string,
-  params: option<{..} as 'a>,
+  params: option<'a>,
   data: option<formData>,
 }
 
@@ -127,9 +127,7 @@ function (mr) {
 }
 `)
 
-type containerizereqConfig<'a> = (reqConfig<{..} as 'a>, array<reqConfigPart>) => reqConfigContainer
-
-let containerizereqConfig: containerizereqConfig<{..}> = %raw(`
+let containerizereqConfig: (reqConfig<'a>, array<reqConfigPart>) => reqConfigContainer = %raw(`
 function (reqConfig, reqConfigParts) {
   const result = {...reqConfig};
   reqConfigParts.forEach(rp => {
@@ -142,7 +140,7 @@ function (reqConfig, reqConfigParts) {
 `)
 
 let buildParamsContainer = (
-  reqConfig: reqConfig<{..}>,
+  reqConfig: reqConfig<'p>,
   advAjaxParams: array<advAjaxParam>,
 ): reqConfigContainer => {
   let reqConfigParts: array<reqConfigPart> = advAjaxParams->Array.map(aap =>

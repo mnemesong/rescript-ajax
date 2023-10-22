@@ -1,6 +1,6 @@
 type formData
 
-let structToFormData: {..} => formData = %raw(` 
+let structToFormData: 'p => formData = %raw(` 
 function(params) {
   const fd = new FormData();
   Object.keys(params).forEach(k => {
@@ -9,8 +9,6 @@ function(params) {
   return fd;
 } 
 `)
-
-let getEmpty: {..} = %raw(`{}`)
 
 let formDataToStruct: formData => {..} = %raw(` 
 function (formData) {

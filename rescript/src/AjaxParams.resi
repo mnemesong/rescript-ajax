@@ -1,8 +1,6 @@
 type formData
 
-let structToFormData: {..} => formData
-
-let getEmpty: {..}
+let structToFormData: 'p => formData
 
 let formDataToStruct: formData => {..}
 

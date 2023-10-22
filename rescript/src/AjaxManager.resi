@@ -22,7 +22,7 @@ module type AjaxEnv = {
 module type AjaxManager = {
   type data
 
-  let sendAjaxParams: (action, {..}, array<advAjaxParam>) => promise<ajaxResponse<data>>
+  let sendAjaxParams: (action, 'p, array<advAjaxParam>) => promise<ajaxResponse<data>>
   let sendAjaxFormData: (action, formData, array<advAjaxParam>) => promise<ajaxResponse<data>>
 }
 

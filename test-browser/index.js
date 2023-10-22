@@ -312,8 +312,6 @@ var structToFormData = (function(params) {
   return fd;
 });
 
-var getEmpty = {};
-
 var formDataToStruct = (function (formData) {
   const rec = {};
   for (const key of formData.keys()) {
@@ -376,7 +374,6 @@ var mergeFormData = (function (fd1, fd2) {
 });
 
 exports.structToFormData = structToFormData;
-exports.getEmpty = getEmpty;
 exports.formDataToStruct = formDataToStruct;
 exports.collectFormData = collectFormData;
 exports.mergeFormData = mergeFormData;

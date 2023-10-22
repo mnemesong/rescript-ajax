@@ -23,7 +23,7 @@ module type AjaxEnv = {
 module type AjaxManager = {
   type data
 
-  let sendAjaxParams: (action, {..}, array<advAjaxParam>) => promise<ajaxResponse<data>>
+  let sendAjaxParams: (action, 'p, array<advAjaxParam>) => promise<ajaxResponse<data>>
   let sendAjaxFormData: (action, formData, array<advAjaxParam>) => promise<ajaxResponse<data>>
 }
 
@@ -51,10 +51,10 @@ module MakeAjaxManager: MakeAjaxManager = (AE: AjaxEnv, Data: Data) => {
   }
   `)
 
-  let sendAjaxParams = (action: action, params: {..}, advParams: array<advAjaxParam>): promise<
+  let sendAjaxParams = (action: action, params: 'p, advParams: array<advAjaxParam>): promise<
     ajaxResponse<data>,
   > => {
-    let reqParams: reqConfig<{..}> = switch action {
+    let reqParams: reqConfig<'p> = switch action {
     | FormUrlencoded(method, url) => {
         method,
         url,
@@ -89,7 +89,7 @@ module MakeAjaxManager: MakeAjaxManager = (AE: AjaxEnv, Data: Data) => {
     formData: formData,
     advParams: array<advAjaxParam>,
   ): promise<ajaxResponse<data>> => {
-    let reqParams: reqConfig<{..}> = switch action {
+    let reqParams: reqConfig<'p> = switch action {
     | FormUrlencoded(method, url) => {
         method,
         url,

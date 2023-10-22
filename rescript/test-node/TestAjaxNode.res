@@ -1,11 +1,11 @@
 open AjaxNode
 
-let paramsToSend: {..} = %raw(`{}`)
+type param = {}
 
 let sendAjaxToDotabuff = async () => {
   let result = await AjaxNodeText.sendAjaxParams(
     FormUrlencoded(#get, "http://ru.dotabuff.com/"),
-    paramsToSend,
+    ({}: param),
     [],
   )
   Js.Console.log(result)
