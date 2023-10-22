@@ -1,11 +1,12 @@
-7
+8
 AjaxData
 AjaxNode
 AjaxParams
 AjaxBrowser
 AjaxManager
+TestAjaxNode
 TestAjaxServer
 TestAjaxBrowser
-rescript\src	rescript\app-test	
-1
+rescript\src	rescript\test-node	rescript\test-browser	
+1
 0

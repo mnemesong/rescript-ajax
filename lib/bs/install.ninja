@@ -3,6 +3,18 @@ rule cp
   command = cmd.exe /C copy /Y $i $out >NUL
 rule touch
  command = cmd.exe /C type nul >>$out & copy $out+,, >NUL
+o TestAjaxNode.cmi : cp ..\bs\rescript\test-node\TestAjaxNode.cmi
+o TestAjaxNode.cmj : cp ..\bs\rescript\test-node\TestAjaxNode.cmj
+o TestAjaxNode.cmt : cp ..\bs\rescript\test-node\TestAjaxNode.cmt
+o TestAjaxNode.res : cp ..\..\rescript\test-node\TestAjaxNode.res
+o TestAjaxServer.cmi : cp ..\bs\rescript\test-browser\TestAjaxServer.cmi
+o TestAjaxServer.cmj : cp ..\bs\rescript\test-browser\TestAjaxServer.cmj
+o TestAjaxServer.cmt : cp ..\bs\rescript\test-browser\TestAjaxServer.cmt
+o TestAjaxServer.res : cp ..\..\rescript\test-browser\TestAjaxServer.res
+o TestAjaxBrowser.cmi : cp ..\bs\rescript\test-browser\TestAjaxBrowser.cmi
+o TestAjaxBrowser.cmj : cp ..\bs\rescript\test-browser\TestAjaxBrowser.cmj
+o TestAjaxBrowser.cmt : cp ..\bs\rescript\test-browser\TestAjaxBrowser.cmt
+o TestAjaxBrowser.res : cp ..\..\rescript\test-browser\TestAjaxBrowser.res
 o AjaxData.cmi : cp ..\bs\rescript\src\AjaxData.cmi
 o AjaxData.cmj : cp ..\bs\rescript\src\AjaxData.cmj
 o AjaxData.cmt : cp ..\bs\rescript\src\AjaxData.cmt
@@ -23,12 +35,4 @@ o AjaxManager.cmi : cp ..\bs\rescript\src\AjaxManager.cmi
 o AjaxManager.cmj : cp ..\bs\rescript\src\AjaxManager.cmj
 o AjaxManager.cmt : cp ..\bs\rescript\src\AjaxManager.cmt
 o AjaxManager.res : cp ..\..\rescript\src\AjaxManager.res
-o TestAjaxServer.cmi : cp ..\bs\rescript\app-test\TestAjaxServer.cmi
-o TestAjaxServer.cmj : cp ..\bs\rescript\app-test\TestAjaxServer.cmj
-o TestAjaxServer.cmt : cp ..\bs\rescript\app-test\TestAjaxServer.cmt
-o TestAjaxServer.res : cp ..\..\rescript\app-test\TestAjaxServer.res
-o TestAjaxBrowser.cmi : cp ..\bs\rescript\app-test\TestAjaxBrowser.cmi
-o TestAjaxBrowser.cmj : cp ..\bs\rescript\app-test\TestAjaxBrowser.cmj
-o TestAjaxBrowser.cmt : cp ..\bs\rescript\app-test\TestAjaxBrowser.cmt
-o TestAjaxBrowser.res : cp ..\..\rescript\app-test\TestAjaxBrowser.res
-build install.stamp : touch AjaxData.cmi AjaxData.cmj AjaxNode.cmi AjaxNode.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj TestAjaxServer.cmi TestAjaxServer.cmj TestAjaxBrowser.cmi TestAjaxBrowser.cmj 
+build install.stamp : touch TestAjaxNode.cmi TestAjaxNode.cmj TestAjaxServer.cmi TestAjaxServer.cmj TestAjaxBrowser.cmi TestAjaxBrowser.cmj AjaxData.cmi AjaxData.cmj AjaxNode.cmi AjaxNode.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj 

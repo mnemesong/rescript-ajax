@@ -1,12 +1,13 @@
 {
   "name": "rescript-ajax",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "rescript module for sendig ajax via axious",
   "scripts": {
     "res:build": "rescript",
     "res:dev": "rescript build -w",
-    "test:server": "node ./lib/js/rescript/app-test/TestAjaxServer.bs",
-    "test:build:browser": "browserify ./lib/js/rescript/app-test/TestAjaxBrowser.bs.js > test-browser/index.js"
+    "test:server": "node ./lib/js/rescript/test-browser/TestAjaxServer.bs",
+    "test:build:browser": "browserify ./lib/js/rescript/test-browser/TestAjaxBrowser.bs.js > test-browser/index.js",
+    "test:node": "node ./lib/js/rescript/test-node/TestAjaxNode.bs"
   },
   "repository": {
     "type": "git",

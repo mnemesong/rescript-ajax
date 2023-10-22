@@ -2,15 +2,24 @@ rescript = 1
 g_finger := D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml\install.stamp
 rule astj
   command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
-o rescript\src\AjaxData.ast : astj ..\..\rescript\src\AjaxData.res
+o rescript\test-node\TestAjaxNode.ast : astj ..\..\rescript\test-node\TestAjaxNode.res
 rule deps
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -hash a8e8e8c6465b413c715d0fd8015fcd0f $in
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -hash 79037f354c4ac1ec0592c2036e81c09f $in
   restat = 1
-o rescript\src\AjaxData.d : deps rescript\src\AjaxData.ast
+o rescript\test-node\TestAjaxNode.d : deps rescript\test-node\TestAjaxNode.ast
 rule mij
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I "rescript\app-test" -I "rescript\src" -I rescript -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I "rescript\src" -I "rescript\test-browser" -I "rescript\test-node" -I rescript -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
   dyndep = 1
   restat = 1
+o rescript\test-node\TestAjaxNode.cmj rescript\test-node\TestAjaxNode.cmi ..\js\rescript\test-node\TestAjaxNode.bs.js : mij rescript\test-node\TestAjaxNode.ast
+o rescript\test-browser\TestAjaxServer.ast : astj ..\..\rescript\test-browser\TestAjaxServer.res
+o rescript\test-browser\TestAjaxServer.d : deps rescript\test-browser\TestAjaxServer.ast
+o rescript\test-browser\TestAjaxServer.cmj rescript\test-browser\TestAjaxServer.cmi ..\js\rescript\test-browser\TestAjaxServer.bs.js : mij rescript\test-browser\TestAjaxServer.ast
+o rescript\test-browser\TestAjaxBrowser.ast : astj ..\..\rescript\test-browser\TestAjaxBrowser.res
+o rescript\test-browser\TestAjaxBrowser.d : deps rescript\test-browser\TestAjaxBrowser.ast
+o rescript\test-browser\TestAjaxBrowser.cmj rescript\test-browser\TestAjaxBrowser.cmi ..\js\rescript\test-browser\TestAjaxBrowser.bs.js : mij rescript\test-browser\TestAjaxBrowser.ast
+o rescript\src\AjaxData.ast : astj ..\..\rescript\src\AjaxData.res
+o rescript\src\AjaxData.d : deps rescript\src\AjaxData.ast
 o rescript\src\AjaxData.cmj rescript\src\AjaxData.cmi ..\js\rescript\src\AjaxData.bs.js : mij rescript\src\AjaxData.ast
 o rescript\src\AjaxNode.ast : astj ..\..\rescript\src\AjaxNode.res
 o rescript\src\AjaxNode.d : deps rescript\src\AjaxNode.ast
@@ -24,9 +33,3 @@ o rescript\src\AjaxBrowser.cmj rescript\src\AjaxBrowser.cmi ..\js\rescript\src\A
 o rescript\src\AjaxManager.ast : astj ..\..\rescript\src\AjaxManager.res
 o rescript\src\AjaxManager.d : deps rescript\src\AjaxManager.ast
 o rescript\src\AjaxManager.cmj rescript\src\AjaxManager.cmi ..\js\rescript\src\AjaxManager.bs.js : mij rescript\src\AjaxManager.ast
-o rescript\app-test\TestAjaxServer.ast : astj ..\..\rescript\app-test\TestAjaxServer.res
-o rescript\app-test\TestAjaxServer.d : deps rescript\app-test\TestAjaxServer.ast
-o rescript\app-test\TestAjaxServer.cmj rescript\app-test\TestAjaxServer.cmi ..\js\rescript\app-test\TestAjaxServer.bs.js : mij rescript\app-test\TestAjaxServer.ast
-o rescript\app-test\TestAjaxBrowser.ast : astj ..\..\rescript\app-test\TestAjaxBrowser.res
-o rescript\app-test\TestAjaxBrowser.d : deps rescript\app-test\TestAjaxBrowser.ast
-o rescript\app-test\TestAjaxBrowser.cmj rescript\app-test\TestAjaxBrowser.cmi ..\js\rescript\app-test\TestAjaxBrowser.bs.js : mij rescript\app-test\TestAjaxBrowser.ast
