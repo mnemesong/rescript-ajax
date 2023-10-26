@@ -138,20 +138,6 @@ function buildParamsContainer(reqConfig, advAjaxParams) {
   return containerizereqConfig(reqConfig, reqConfigParts);
 }
 
-exports.buildBaseUrlParam = buildBaseUrlParam;
-exports.buildHeadersParam = buildHeadersParam;
-exports.buildTimeoutParam = buildTimeoutParam;
-exports.buildCredentialsParam = buildCredentialsParam;
-exports.buildAuthParam = buildAuthParam;
-exports.buildResponseTypeParam = buildResponseTypeParam;
-exports.buildXsrfCookieNameParam = buildXsrfCookieNameParam;
-exports.buildXsrfHeaderNameParam = buildXsrfHeaderNameParam;
-exports.buildMaxContentLengthParam = buildMaxContentLengthParam;
-exports.buildMaxBodyLengthParam = buildMaxBodyLengthParam;
-exports.buildProxyParam = buildProxyParam;
-exports.buildDecompressParam = buildDecompressParam;
-exports.buildMaxRedirectsParam = buildMaxRedirectsParam;
-exports.containerizereqConfig = containerizereqConfig;
 exports.buildParamsContainer = buildParamsContainer;
 /* No side effect */
 

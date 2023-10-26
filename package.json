@@ -5,9 +5,9 @@
   "scripts": {
     "res:build": "rescript",
     "res:dev": "rescript build -w",
-    "test:server": "node ./lib/js/rescript/test-browser/TestAjaxServer.bs",
-    "test:build:browser": "browserify ./lib/js/rescript/test-browser/TestAjaxBrowser.bs.js > test-browser/index.js",
-    "test:node": "node ./lib/js/rescript/test-node/TestAjaxNode.bs"
+    "test:server": "node ./lib/js/test-browser/TestAjaxServer.bs",
+    "test:build:browser": "browserify ./lib/js/test-browser/TestAjaxBrowser.bs.js > test-browser/index.js",
+    "test:node": "node ./lib/js/test-node/TestAjaxNode.bs"
   },
   "repository": {
     "type": "git",

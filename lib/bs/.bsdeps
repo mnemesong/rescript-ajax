@@ -1,10 +1,9 @@
 10.1.4
 D:\rescript-projects\rescript-ajax
 0
-bsconfig.json	0x1.94a99d7b2e10bp+30
-rescript	0x1.94d4040b05244p+30
-rescript\test-node	0x1.94d404325e2a7p+30
-rescript\test-browser	0x1.94af1a90253a4p+30
-rescript\src	0x1.94d638424906cp+30
+bsconfig.json	0x1.94eb06322f9c4p+30
+test-node	0x1.94d404325e2a7p+30
+test-browser	0x1.94eb053edd2a5p+30
+src	0x1.94d638424906cp+30
 ===
-D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\rescript.exe	0x1.94aaccf01a9fcp+30
+D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\rescript.exe	0x1.94eb12339fbe7p+30
