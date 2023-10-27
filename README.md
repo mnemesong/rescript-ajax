@@ -17,14 +17,11 @@ function (qs) {
 let sendGet = async () => {
   switch sendQuerySelectHtmlElem("#getForm") {
   | None => Js.Console.log("Can't send data")
-  | Some(htmlEl) => {
-      let res =
-        await FormUrlencoded(#get, "/get")->AjaxBrowserUnknown.sendAjaxFormData(
-          collectFormData(htmlEl),
-          [],
-        )
-      Js.Console.log(res)
-    }
+  | Some(htmlEl) =>
+    (await FormUrlencoded(#get, "/get")
+    ->AjaxBrowser.sendAjaxFormData(collectFormData(htmlEl), [])
+    ->ResultExn.thenTryMap(res => Js.Console.log(res.data))) //ResultExn - it's dev-dependency
+    ->ResultExn.getExn
   }
 }
 
@@ -93,25 +90,9 @@ type advAjaxParam =
   | AjaxDecompress
 ```
 
-#### AjaxData.resi
-Module contains abstractions for building Data module, which will use for response-data validation in AjaxManager. Also contains prepared DataUnknown and DataText modules
-```rescript
-module type Data = {
-  type data
-  let parseData: unknown => result<data, string>
-}
-
-module type DataUnknown = Data with type data = unknown
-module DataUnknown: DataUnknown
-
-module type DataText = Data with type data = string
-module DataText: DataText
-```
-
 #### AjaxManager.resi
 Module contains AjaxManager abstraction for module, thats contains api for sending AJAX. Also contains MakeAjaxManager functor, thats allows to configure environment and data-parser for AjaxManager module.
 ```rescript
-open AjaxData
 open AjaxParams
 open WebTypes
 open AjaxConfig
@@ -133,13 +114,19 @@ module type AjaxEnv = {
 }
 
 module type AjaxManager = {
-  type data
-
-  let sendAjaxParams: (action, 'p, array<advAjaxParam>) => promise<ajaxResponse<data>>
-  let sendAjaxFormData: (action, formData, array<advAjaxParam>) => promise<ajaxResponse<data>>
+  let sendAjaxParams: (
+    action,
+    'p,
+    array<advAjaxParam>,
+  ) => promise<result<ajaxResponse<unknown>, exn>>
+  let sendAjaxFormData: (
+    action,
+    formData,
+    array<advAjaxParam>,
+  ) => promise<result<ajaxResponse<unknown>, exn>>
 }
 
-module type MakeAjaxManager = (AE: AjaxEnv, Data: Data) => (AjaxManager with type data = Data.data)
+module type MakeAjaxManager = (AE: AjaxEnv) => AjaxManager
 module MakeAjaxManager: MakeAjaxManager
 ```
 
@@ -150,14 +137,7 @@ open AjaxManager
 
 module AjaxEnvNode: AjaxEnv
 
-module type AjaxNode = (Data: AjaxData.Data) => (AjaxManager with type data = Data.data)
-module AjaxNode: AjaxNode
-
-module type AjaxNodeUnknown = AjaxManager with type data = unknown
-module AjaxNodeUnknown: AjaxNodeUnknown
-
-module type AjaxNodeText = AjaxManager with type data = string
-module AjaxNodeText: AjaxNodeText
+module AjaxNode: AjaxManager
 ```
 
 #### AjaxBrowser.resi
@@ -167,14 +147,7 @@ open AjaxManager
 
 module AjaxEnvBrowser: AjaxEnv
 
-module type AjaxBrowser = (Data: AjaxData.Data) => (AjaxManager with type data = Data.data)
-module AjaxBrowser: AjaxBrowser
-
-module type AjaxBrowserUnknown = AjaxManager with type data = unknown
-module AjaxBrowserUnknown: AjaxBrowserUnknown
-
-module type AjaxBrowserText = AjaxManager with type data = string
-module AjaxBrowserText: AjaxBrowserText
+module AjaxBrowser: AjaxManager
 
 ```
 
