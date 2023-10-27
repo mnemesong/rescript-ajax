@@ -11,42 +11,32 @@ function (qs) {
 let sendGet = async () => {
   switch sendQuerySelectHtmlElem("#getForm") {
   | None => Js.Console.log("Can't send data")
-  | Some(htmlEl) => {
-      let res =
-        await FormUrlencoded(#get, "/get")->AjaxBrowserUnknown.sendAjaxFormData(
-          collectFormData(htmlEl),
-          [],
-        )
-      Js.Console.log(res)
-    }
+  | Some(htmlEl) =>
+    (await FormUrlencoded(#get, "/get")
+    ->AjaxBrowser.sendAjaxFormData(collectFormData(htmlEl), [])
+    ->ResultExn.thenTryMap(res => Js.Console.log(res.data)))
+    ->ResultExn.getExn
   }
 }
 
 let sendPost = async () => {
   switch sendQuerySelectHtmlElem("#postForm") {
   | None => Js.Console.log("Can't send data")
-  | Some(htmlEl) => {
-      let res =
-        await FormUrlencoded(#post, "/post")->AjaxBrowserUnknown.sendAjaxFormData(
-          collectFormData(htmlEl),
-          [],
-        )
-      Js.Console.log(res)
-    }
+  | Some(htmlEl) =>
+    (await FormUrlencoded(#post, "/post")
+    ->AjaxBrowser.sendAjaxFormData(collectFormData(htmlEl), [])
+    ->ResultExn.thenTryMap(res => Js.Console.log(res.data)))
+    ->ResultExn.getExn
   }
 }
 
 let sendMultipart = async () => {
   switch sendQuerySelectHtmlElem("#multipartForm") {
   | None => Js.Console.log("Can't send data")
-  | Some(htmlEl) => {
-      let res =
-        await MultipartFormData(#post, "/multipart")->AjaxBrowserUnknown.sendAjaxFormData(
-          collectFormData(htmlEl),
-          [],
-        )
-      Js.Console.log(res)
-    }
+  | Some(htmlEl) => (await MultipartFormData(#post, "/multipart")
+    ->AjaxBrowser.sendAjaxFormData(collectFormData(htmlEl), [])
+    ->ResultExn.thenTryMap(res => Js.Console.log(res.data)))
+    ->ResultExn.getExn
   }
 }
 

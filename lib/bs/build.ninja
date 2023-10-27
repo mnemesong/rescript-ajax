@@ -1,14 +1,15 @@
 rescript = 1
 g_finger := D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml\install.stamp
+g_finger := D:\rescript-projects\rescript-ajax\node_modules\rescript-result-exn\lib\ocaml\install.stamp
 rule astj
   command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
 o test-node\TestAjaxNode.ast : astj ..\..\test-node\TestAjaxNode.res
 rule deps_dev
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -g -hash ceb74e5396aefcc8b415b0c764cce909 $in
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -g -hash 17da7431a82a3e755d30d0314e27b814 $in
   restat = 1
 o test-node\TestAjaxNode.d : deps_dev test-node\TestAjaxNode.ast
 rule mij_dev
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I test-browser -I test-node -I src -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"    -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I test-browser -I test-node -I src -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml" -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-result-exn\lib\ocaml"    -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
   dyndep = 1
   restat = 1
 o test-node\TestAjaxNode.cmj test-node\TestAjaxNode.cmi ..\js\test-node\TestAjaxNode.bs.js : mij_dev test-node\TestAjaxNode.ast
@@ -18,26 +19,21 @@ o test-browser\TestAjaxServer.cmj test-browser\TestAjaxServer.cmi ..\js\test-bro
 o test-browser\TestAjaxBrowser.ast : astj ..\..\test-browser\TestAjaxBrowser.res
 o test-browser\TestAjaxBrowser.d : deps_dev test-browser\TestAjaxBrowser.ast
 o test-browser\TestAjaxBrowser.cmj test-browser\TestAjaxBrowser.cmi ..\js\test-browser\TestAjaxBrowser.bs.js : mij_dev test-browser\TestAjaxBrowser.ast
-o src\AjaxData.ast : astj ..\..\src\AjaxData.res
-rule deps
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -hash ceb74e5396aefcc8b415b0c764cce909 $in
-  restat = 1
-o src\AjaxData.d : deps src\AjaxData.ast src\AjaxData.iast
-o src\AjaxData.iast : astj ..\..\src\AjaxData.resi
-rule mi
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I src -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"   -bs-v $g_finger $i
-  dyndep = 1
-  restat = 1
-o src\AjaxData.cmi : mi src\AjaxData.iast
-rule mj
-  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -bs-read-cmi -I src -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
-  dyndep = 1
-  restat = 1
-o src\AjaxData.cmj ..\js\src\AjaxData.bs.js : mj src\AjaxData.ast src\AjaxData.cmi
 o src\AjaxNode.ast : astj ..\..\src\AjaxNode.res
+rule deps
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsb_helper.exe" -hash 17da7431a82a3e755d30d0314e27b814 $in
+  restat = 1
 o src\AjaxNode.d : deps src\AjaxNode.ast src\AjaxNode.iast
 o src\AjaxNode.iast : astj ..\..\src\AjaxNode.resi
+rule mi
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I src -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml" -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-result-exn\lib\ocaml"   -bs-v $g_finger $i
+  dyndep = 1
+  restat = 1
 o src\AjaxNode.cmi : mi src\AjaxNode.iast
+rule mj
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -bs-read-cmi -I src -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml" -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-result-exn\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  dyndep = 1
+  restat = 1
 o src\AjaxNode.cmj ..\js\src\AjaxNode.bs.js : mj src\AjaxNode.ast src\AjaxNode.cmi
 o src\AjaxConfig.ast : astj ..\..\src\AjaxConfig.res
 o src\AjaxConfig.d : deps src\AjaxConfig.ast src\AjaxConfig.iast
@@ -55,7 +51,9 @@ o src\AjaxBrowser.iast : astj ..\..\src\AjaxBrowser.resi
 o src\AjaxBrowser.cmi : mi src\AjaxBrowser.iast
 o src\AjaxBrowser.cmj ..\js\src\AjaxBrowser.bs.js : mj src\AjaxBrowser.ast src\AjaxBrowser.cmi
 o src\AjaxManager.ast : astj ..\..\src\AjaxManager.res
-o src\AjaxManager.d : deps src\AjaxManager.ast src\AjaxManager.iast
-o src\AjaxManager.iast : astj ..\..\src\AjaxManager.resi
-o src\AjaxManager.cmi : mi src\AjaxManager.iast
-o src\AjaxManager.cmj ..\js\src\AjaxManager.bs.js : mj src\AjaxManager.ast src\AjaxManager.cmi
+o src\AjaxManager.d : deps src\AjaxManager.ast
+rule mij
+  command = "D:\rescript-projects\rescript-ajax\node_modules\rescript\win32\bsc.exe" -I src -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-web-types\lib\ocaml" -I "D:\rescript-projects\rescript-ajax\node_modules\rescript-result-exn\lib\ocaml"   -bs-package-name rescript-ajax -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  dyndep = 1
+  restat = 1
+o src\AjaxManager.cmj src\AjaxManager.cmi ..\js\src\AjaxManager.bs.js : mij src\AjaxManager.ast

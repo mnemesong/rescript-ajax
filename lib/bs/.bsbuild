@@ -1,12 +1,11 @@
-6
-AjaxData
+5
 AjaxNode
 AjaxConfig
 AjaxParams
 AjaxBrowser
 AjaxManager
 src	
-1
+1
 3
 TestAjaxNode
 TestAjaxServer

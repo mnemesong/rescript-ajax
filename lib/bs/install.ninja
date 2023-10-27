@@ -3,12 +3,6 @@ rule cp
   command = cmd.exe /C copy /Y $i $out >NUL
 rule touch
  command = cmd.exe /C type nul >>$out & copy $out+,, >NUL
-o AjaxData.cmi : cp ..\bs\src\AjaxData.cmi
-o AjaxData.cmj : cp ..\bs\src\AjaxData.cmj
-o AjaxData.cmt : cp ..\bs\src\AjaxData.cmt
-o AjaxData.res : cp ..\..\src\AjaxData.res
-o AjaxData.resi : cp ..\..\src\AjaxData.resi
-o AjaxData.cmti : cp ..\bs\src\AjaxData.cmti
 o AjaxNode.cmi : cp ..\bs\src\AjaxNode.cmi
 o AjaxNode.cmj : cp ..\bs\src\AjaxNode.cmj
 o AjaxNode.cmt : cp ..\bs\src\AjaxNode.cmt
@@ -37,6 +31,4 @@ o AjaxManager.cmi : cp ..\bs\src\AjaxManager.cmi
 o AjaxManager.cmj : cp ..\bs\src\AjaxManager.cmj
 o AjaxManager.cmt : cp ..\bs\src\AjaxManager.cmt
 o AjaxManager.res : cp ..\..\src\AjaxManager.res
-o AjaxManager.resi : cp ..\..\src\AjaxManager.resi
-o AjaxManager.cmti : cp ..\bs\src\AjaxManager.cmti
-build install.stamp : touch AjaxData.cmi AjaxData.cmj AjaxNode.cmi AjaxNode.cmj AjaxConfig.cmi AjaxConfig.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj 
+build install.stamp : touch AjaxNode.cmi AjaxNode.cmj AjaxConfig.cmi AjaxConfig.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj 

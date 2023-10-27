@@ -1,4 +1,3 @@
-open AjaxData
 open AjaxParams
 open WebTypes
 open AjaxConfig
@@ -21,38 +20,39 @@ module type AjaxEnv = {
 }
 
 module type AjaxManager = {
-  type data
-
-  let sendAjaxParams: (action, 'p, array<advAjaxParam>) => promise<ajaxResponse<data>>
-  let sendAjaxFormData: (action, formData, array<advAjaxParam>) => promise<ajaxResponse<data>>
+  let sendAjaxParams: (
+    action,
+    'p,
+    array<advAjaxParam>,
+  ) => promise<result<ajaxResponse<unknown>, exn>>
+  let sendAjaxFormData: (
+    action,
+    formData,
+    array<advAjaxParam>,
+  ) => promise<result<ajaxResponse<unknown>, exn>>
 }
 
-module type MakeAjaxManager = (AE: AjaxEnv, Data: Data) => (AjaxManager with type data = Data.data)
+module type MakeAjaxManager = (AE: AjaxEnv) => AjaxManager
 
-module MakeAjaxManager: MakeAjaxManager = (AE: AjaxEnv, Data: Data) => {
-  type data = Data.data
-
-  let checkResult = (res: result<'a, string>): 'a => res->Result.getExn
-
-  let sendAxios: (
-    axios,
-    reqConfigContainer,
-    unknown => result<data, string>,
-    result<'a, string> => 'a,
-  ) => promise<ajaxResponse<data>> = %raw(`
-  function (axios, params, parse, checkResult) {
-      return axios(params).then(res => {
-        return {
-          data: checkResult(parse(res.data)),
+module MakeAjaxManager: MakeAjaxManager = (AE: AjaxEnv) => {
+  let sendAxios: (axios, reqConfigContainer) => promise<result<ajaxResponse<unknown>, exn>> = %raw(`
+  function (axios, params) {
+      return axios(params).then(res => ({
+        TAG: /* Ok */ 0,
+        _0: {
+          data: res.data,
           status: res.status,
           headers: res.headers
         }
-      });
+      })).catch(e => ({
+        TAG: /* Error */ 1,
+        _0: e
+      }));
   }
   `)
 
   let sendAjaxParams = (action: action, params: 'p, advParams: array<advAjaxParam>): promise<
-    ajaxResponse<data>,
+    result<ajaxResponse<unknown>, exn>,
   > => {
     let reqParams: reqConfig<'p> = switch action {
     | FormUrlencoded(method, url) => {
@@ -81,14 +81,14 @@ module MakeAjaxManager: MakeAjaxManager = (AE: AjaxEnv, Data: Data) => {
       }
     }
     let paramsContainer = buildParamsContainer(reqParams, advParams)
-    sendAxios(AE.getAxios(), paramsContainer, Data.parseData, checkResult)
+    sendAxios(AE.getAxios(), paramsContainer)
   }
 
   let sendAjaxFormData = (
     action: action,
     formData: formData,
     advParams: array<advAjaxParam>,
-  ): promise<ajaxResponse<data>> => {
+  ): promise<result<ajaxResponse<unknown>, exn>> => {
     let reqParams: reqConfig<'p> = switch action {
     | FormUrlencoded(method, url) => {
         method,
@@ -123,6 +123,6 @@ module MakeAjaxManager: MakeAjaxManager = (AE: AjaxEnv, Data: Data) => {
       advParams->Array.concat([AjaxHeaders([("Content-Type", "multipart/form-data")])])
         |> buildParamsContainer(reqParams)
     }
-    sendAxios(AE.getAxios(), paramsContainer, Data.parseData, checkResult)
+    sendAxios(AE.getAxios(), paramsContainer)
   }
 }

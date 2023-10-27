@@ -1,2 +1,2 @@
-src\AjaxNode.cmj : src\AjaxData.cmj src\AjaxData.cmi src\AjaxManager.cmj src\AjaxManager.cmi
-src\AjaxNode.cmi :  src\AjaxData.cmi  src\AjaxManager.cmi
+src\AjaxNode.cmj : src\AjaxManager.cmj src\AjaxManager.cmi
+src\AjaxNode.cmi :  src\AjaxManager.cmi
