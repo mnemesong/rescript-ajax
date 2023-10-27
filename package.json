@@ -13,7 +13,11 @@
     "type": "git",
     "url": "git+https://github.com/mnemesong/rescript-ajax.git"
   },
-  "keywords": [],
+  "keywords": [
+    "rescript",
+    "axios",
+    "ajax"
+  ],
   "author": "Anatoly Starodubtsev",
   "license": "MIT",
   "bugs": {
