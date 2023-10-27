@@ -31,4 +31,6 @@ o AjaxManager.cmi : cp ..\bs\src\AjaxManager.cmi
 o AjaxManager.cmj : cp ..\bs\src\AjaxManager.cmj
 o AjaxManager.cmt : cp ..\bs\src\AjaxManager.cmt
 o AjaxManager.res : cp ..\..\src\AjaxManager.res
+o AjaxManager.resi : cp ..\..\src\AjaxManager.resi
+o AjaxManager.cmti : cp ..\bs\src\AjaxManager.cmti
 build install.stamp : touch AjaxNode.cmi AjaxNode.cmj AjaxConfig.cmi AjaxConfig.cmj AjaxParams.cmi AjaxParams.cmj AjaxBrowser.cmi AjaxBrowser.cmj AjaxManager.cmi AjaxManager.cmj 

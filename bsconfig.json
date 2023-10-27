@@ -20,7 +20,9 @@
   ],
   "suffix": ".bs.js",
   "bs-dependencies": [
-    "rescript-web-types",
+    "rescript-web-types"
+  ],
+  "bs-dev-dependencies": [
     "rescript-result-exn"
   ]
 }
